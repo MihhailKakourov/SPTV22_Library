@@ -1,11 +1,12 @@
 package entity;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
 
-public class History {
+public class History implements Serializable {
     private Book book;
     private Reader reader;
     private Date takeOutBook;

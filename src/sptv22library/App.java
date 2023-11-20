@@ -9,18 +9,22 @@ import java.util.Scanner;
 import managers.BookManager;
 import managers.HistoryManager;
 import tools.InputProtection;
+import managers.SaveManager;
 
 
 public class App {
     private Scanner scanner = new Scanner(System.in);
-    private Book[] books = new Book[0];
-    private Reader[] readers = new Reader[0];
-    private History[] histories = new History[0];
+    private Book[] books;
+    private Reader[] readers;
+    private History[] histories;
     private final BookManager bookManager;
     private final ReaderManager readerManager;
     private final HistoryManager historyManager;
     
     public App(){
+        this.books = SaveManager.loadBooks();
+        this.readers = SaveManager.loadReaders();
+        this.histories = SaveManager.loadHistories();
         this.scanner = new Scanner(System.in);
         this.bookManager = new BookManager(scanner);
         this.readerManager = new ReaderManager(scanner);
@@ -50,6 +54,7 @@ public class App {
                 case 1:
                     this.books = Arrays.copyOf(this.books, this.books.length+1);
                     this.books[this.books.length - 1] = bookManager.addBook();
+                    SaveManager.saveBooks(this.books);
                     break;
                 case 2:
                     bookManager.printListBooks(books);
@@ -58,6 +63,7 @@ public class App {
                 case 3:
                     this.readers = Arrays.copyOf(this.readers, this.readers.length+1);
                     this.readers[this.readers.length - 1] = readerManager.addReader();
+                    SaveManager.saveReaders(readers);
                     break;
                 case 4:
                     readerManager.printListReader(readers);
@@ -65,12 +71,14 @@ public class App {
                 case 5:
                     this.histories = Arrays.copyOf(this.histories, this.histories.length+1);
                     this.histories[this.histories.length - 1] = historyManager.takeOutBook(books, readers);
+                    SaveManager.saveHistories(histories);
                     break;
                 case 6:
                     historyManager.printListReading(histories);
                     break;
                 case 7:
                     historyManager.returnBook(histories);
+                    SaveManager.saveHistories(histories);
                     break;
                 default:
                     System.out.println("Select task from list");

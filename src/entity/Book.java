@@ -5,6 +5,7 @@
  */
 package entity;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -12,7 +13,7 @@ import java.util.Objects;
  *
  * @author admin
  */
-public class Book {
+public class Book implements Serializable {
     private String title;
     private int publishedYear;
     private Author[] authors = new Author[0];

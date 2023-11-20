@@ -1,8 +1,9 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Author {
+public class Author implements Serializable {
     private String Firstname;
     private String Lastname;
     
