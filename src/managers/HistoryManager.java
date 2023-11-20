@@ -49,4 +49,14 @@ public class HistoryManager {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(date);
     }
+
+    public void returnBook(History[] histories) {
+        System.out.println("Return book: ");
+        this.printListReading(histories);
+        System.out.println("Enter number book from list: ");
+        int numberReturnBook = InputProtection.intInput(1, histories.length);
+        histories[numberReturnBook - 1].setReturnBook(new GregorianCalendar().getTime());
+
+
+    }
 }

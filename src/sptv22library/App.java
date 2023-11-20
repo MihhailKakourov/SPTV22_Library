@@ -40,8 +40,9 @@ public class App {
             System.out.println("4. Print list readers");
             System.out.println("5. Take out book");
             System.out.println("6. Print list reading books");
+            System.out.println("7. Return book");
             System.out.println("Enter task number: ");
-            int task = InputProtection.intInput(0, 6);
+            int task = InputProtection.intInput(0, 7);
             switch (task) {
                 case 0:
                     repeat = false;
@@ -67,6 +68,9 @@ public class App {
                     break;
                 case 6:
                     historyManager.printListReading(histories);
+                    break;
+                case 7:
+                    historyManager.returnBook(histories);
                     break;
                 default:
                     System.out.println("Select task from list");

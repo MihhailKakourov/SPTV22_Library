@@ -4,4 +4,6 @@
 build.xml
 /out
 /.idea
-SPTV22MyHomeTasks.iml
+SPTV22Library.iml
+manifest.mf
+/test
