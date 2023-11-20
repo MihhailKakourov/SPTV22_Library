@@ -7,6 +7,8 @@ package managers;
 
 import entity.Author;
 import entity.Book;
+import tools.InputProtection;
+
 import java.util.Scanner;
 
 /**
@@ -27,17 +29,26 @@ public class BookManager {
         System.out.println("Enter title: ");
         book.setTitle(scanner.nextLine());
         System.out.println("Enter published year: ");
-        book.setPublishedYear(scanner.nextInt());scanner.nextLine();
+        book.setPublishedYear(InputProtection.intInput(1000,2030));
         System.out.println("How many authors in book: ");
-        int countAuthor = scanner.nextInt(); scanner.nextLine();
+        int countAuthor = InputProtection.intInput(1,4);
         for (int i = 0; i < countAuthor; i++) {
-            System.out.println("Enter Author firstname: ");
+            System.out.println("Enter Author (%d) firstname: ");
             String authorFirstname = scanner.nextLine();
-            System.out.println("Enter Author lastname: ");
+            System.out.println("Enter Author (%d) lastname: ");
             String authorLastname = scanner.nextLine();
             book.addAuthor(new Author(authorFirstname, authorLastname));
         }
         System.out.println("Added book: " + book.toString());
         return book; 
+    }
+
+    public void printListBooks(Book[] books) {
+        System.out.println("list books:");
+        for (int i = 0; i < books.length; i++) {
+            System.out.printf("%d. %s%n",
+                    i+1,
+                    books[i].getTitle());
+        }
     }
 }

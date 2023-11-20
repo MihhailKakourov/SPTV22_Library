@@ -54,10 +54,7 @@ public class Author {
         if (!Objects.equals(this.Firstname, other.Firstname)) {
             return false;
         }
-        if (!Objects.equals(this.Lastname, other.Lastname)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.Lastname, other.Lastname);
     }
 
     @Override
