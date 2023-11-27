@@ -5,6 +5,7 @@ import entity.Reader;
 import entity.History;
 import managers.ReaderManager;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import managers.BookManager;
 import managers.HistoryManager;
@@ -14,13 +15,13 @@ import managers.SaveManager;
 
 public class App {
     private Scanner scanner = new Scanner(System.in);
-    private Book[] books;
-    private Reader[] readers;
-    private History[] histories;
+    private List<Book> books;
+    private List<Reader> readers;
+    private List<History> histories;
     private final BookManager bookManager;
     private final ReaderManager readerManager;
     private final HistoryManager historyManager;
-    
+
     public App(){
         this.books = SaveManager.loadBooks();
         this.readers = SaveManager.loadReaders();
@@ -30,8 +31,8 @@ public class App {
         this.readerManager = new ReaderManager(scanner);
         this.historyManager = new HistoryManager(scanner, readerManager, bookManager);
     }
-    
-    
+
+
     void run() {
         boolean repeat = true;
         System.out.println("-----Library-----");
@@ -52,25 +53,21 @@ public class App {
                     repeat = false;
                     break;
                 case 1:
-                    this.books = Arrays.copyOf(this.books, this.books.length+1);
-                    this.books[this.books.length - 1] = bookManager.addBook();
+                    this.books.add(bookManager.addBook());
                     SaveManager.saveBooks(this.books);
                     break;
                 case 2:
                     bookManager.printListBooks(books);
-                    
                     break;
                 case 3:
-                    this.readers = Arrays.copyOf(this.readers, this.readers.length+1);
-                    this.readers[this.readers.length - 1] = readerManager.addReader();
+                    this.readers.add(readerManager.addReader());
                     SaveManager.saveReaders(readers);
                     break;
                 case 4:
                     readerManager.printListReader(readers);
                     break;
                 case 5:
-                    this.histories = Arrays.copyOf(this.histories, this.histories.length+1);
-                    this.histories[this.histories.length - 1] = historyManager.takeOutBook(books, readers);
+                    this.histories.add(historyManager.takeOutBook(books, readers));
                     SaveManager.saveHistories(histories);
                     break;
                 case 6:

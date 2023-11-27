@@ -5,16 +5,15 @@ import entity.History;
 import entity.Reader;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SaveManager {
-    public static Book[] loadBooks() {
-        Book[] books = new Book[0];
-        FileInputStream fis;
-        ObjectInputStream ois;
-        try {
-            fis = new FileInputStream("C:\\Users\\golan\\Documents\\NetBeansProjects\\SPTV22\\SPTV22Library\\src\\managers\\books.txt");
-            ois = new ObjectInputStream(fis);
-            books = (Book[]) ois.readObject();
+    public static List<Book> loadBooks() {;
+        List<Book> books = new ArrayList<>();
+        try (FileInputStream fis = new FileInputStream("C:\\Users\\golan\\Documents\\NetBeansProjects\\SPTV22\\SPTV22Library\\src\\managers\\books.txt");
+             ObjectInputStream ois = new ObjectInputStream(fis)) {
+            books = (List<Book>) ois.readObject();
         } catch (FileNotFoundException e) {
             System.out.println("File \"books.txt\" not found");
         } catch (IOException e) {
@@ -25,14 +24,12 @@ public class SaveManager {
         return books;
     }
 
-    public static Reader[] loadReaders() {
-        Reader[] readers = new Reader[0];
-        FileInputStream fis;
-        ObjectInputStream ois;
+    public static List<Reader> loadReaders() {;
+        List<Reader> readers = new ArrayList<>();
         try {
-            fis = new FileInputStream("C:\\Users\\golan\\Documents\\NetBeansProjects\\SPTV22\\SPTV22Library\\src\\managers\\readers.txt");
-            ois = new ObjectInputStream(fis);
-            readers = (Reader[]) ois.readObject();
+            FileInputStream fis = new FileInputStream("C:/Users/golan/Documents/NetBeansProjects/SPTV22/SPTV22Library/src/managers/readers.txt");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            readers = (List<Reader>) ois.readObject();
         } catch (FileNotFoundException e) {
             System.out.println("File \"readers.txt\" not found");
         } catch (IOException e) {
@@ -43,25 +40,22 @@ public class SaveManager {
         return readers;
     }
 
-    public static History[] loadHistories() {
-        History[] histories = new History[0];
-        FileInputStream fis;
-        ObjectInputStream ois;
-        try {
-            fis = new FileInputStream("C:\\Users\\golan\\Documents\\NetBeansProjects\\SPTV22\\SPTV22Library\\src\\managers\\histories.txt");
-            ois = new ObjectInputStream(fis);
-            histories = (History[]) ois.readObject();
+    public static List<History> loadHistories() {
+        List<History> histories = new ArrayList<>();
+        try (FileInputStream fis = new FileInputStream("C:\\Users\\golan\\Documents\\NetBeansProjects\\SPTV22\\SPTV22Library\\src\\managers\\histories.txt");
+             ObjectInputStream ois = new ObjectInputStream(fis)) {
+             histories = (List<History>) ois.readObject();
         } catch (FileNotFoundException e) {
-            System.out.println("File \"histories.txt\" not found");
+            System.out.println("File not found: histories.txt");
         } catch (IOException e) {
-            System.out.println("I/O error while reading \"histories.txt\"");
+            System.out.println("I/O error while reading histories.txt");
         } catch (ClassNotFoundException e) {
-            System.out.println("Class \"History\" not found");
+            System.out.println("Class not found: History");
         }
         return histories;
     }
 
-    public static void saveBooks(Book[] books) {
+    public static void saveBooks(List<Book> books) {
         FileOutputStream fos;
         ObjectOutputStream oos;
         try {
@@ -75,7 +69,7 @@ public class SaveManager {
         }
     }
 
-    public static void saveReaders(Reader[] readers) {
+    public static void saveReaders(List<Reader> readers) {
         FileOutputStream fos;
         ObjectOutputStream oos;
         try {
@@ -89,7 +83,7 @@ public class SaveManager {
         }
     }
 
-    public static void saveHistories(History[] histories) {
+    public static void saveHistories(List<History> histories) {
         FileOutputStream fos;
         ObjectOutputStream oos;
         try {

@@ -3,8 +3,8 @@ import entity.Reader;
 import entity.Book;
 import entity.History;
 import java.util.GregorianCalendar;
-import managers.BookManager;
-import managers.ReaderManager;
+
+import java.util.List;
 import java.util.Scanner;
 import java.text.SimpleDateFormat;
 import tools.InputProtection;
@@ -18,30 +18,36 @@ public class HistoryManager {
         this.bookManager = bookManager;
         this.readerManager = readerManager;
     }
-    public History takeOutBook(Book[] books, Reader[] readers){
+    public History takeOutBook(List<Book> books, List<Reader>  readers) {
         History history = new History();
+
         bookManager.printListBooks(books);
-        System.out.println("Enter number book from list: ");
-        int numberBook = InputProtection.intInput(0, books.length);
-        history.setBook(books[numberBook - 1]);
+        int numberBook = InputProtection.intInput(0, books.size());
+        history.setBook(books.get(numberBook - 1));
+
         readerManager.printListReader(readers);
-        System.out.println("Enter number reader from list: ");
-        int numberReader = InputProtection.intInput(0, readers.length);
-        history.setReader(readers[numberReader - 1]);
+        int numberReader = InputProtection.intInput(0, readers.size());
+        history.setReader(readers.get(numberReader - 1));
+
         history.setTakeOutBook(new GregorianCalendar().getTime());
-        
+
         return history;
     }
 
-    public void printListReading(History[] histories) {
+    public void printListReading(List<History> histories) {
         System.out.println("----- List of reading books ------");
 
-        for (int i = 0; i < histories.length; i++) {
+        for (int i = 0; i < histories.size(); i++) {
+            Reader reader = histories.get(i).getReader();
+            Book book = histories.get(i).getBook();
+            String fullName = reader.getFirstname() + " " + reader.getLastname();
+            String formattedDate = formatDate(histories.get(i).getTakeOutBook());
+
             System.out.printf("%d. %s - %s - %s%n",
                     i + 1,
-                    histories[i].getReader().getFirstname() + " " + histories[i].getReader().getLastname(),
-                    histories[i].getBook().getTitle(),
-                    formatDate(histories[i].getTakeOutBook()));
+                    fullName,
+                    book.getTitle(),
+                    formattedDate);
         }
     }
     
@@ -50,13 +56,11 @@ public class HistoryManager {
         return sdf.format(date);
     }
 
-    public void returnBook(History[] histories) {
+    public void returnBook(List<History> histories) {
         System.out.println("Return book: ");
         this.printListReading(histories);
         System.out.println("Enter number book from list: ");
-        int numberReturnBook = InputProtection.intInput(1, histories.length);
-        histories[numberReturnBook - 1].setReturnBook(new GregorianCalendar().getTime());
-
-
+        int numberReturnBook = InputProtection.intInput(1, histories.size());
+        histories.get(numberReturnBook - 1).setReturnBook(new GregorianCalendar().getTime());
     }
 }

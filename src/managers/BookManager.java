@@ -9,6 +9,8 @@ import entity.Author;
 import entity.Book;
 import tools.InputProtection;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -22,33 +24,39 @@ public class BookManager {
     public BookManager(Scanner scanner) {
         this.scanner = scanner;
     }
-    
-    public Book addBook(){
+
+    public Book addBook() {
         System.out.println("-----Add book-----");
         Book book = new Book();
+
         System.out.println("Enter title: ");
         book.setTitle(scanner.nextLine());
+
         System.out.println("Enter published year: ");
-        book.setPublishedYear(InputProtection.intInput(1000,2030));
+        book.setPublishedYear(InputProtection.intInput(1000, 2030));
+
         System.out.println("How many authors in book: ");
-        int countAuthor = InputProtection.intInput(1,4);
+        int countAuthor = InputProtection.intInput(1, 4);
+
         for (int i = 0; i < countAuthor; i++) {
-            System.out.println("Enter Author (%d) firstname: ");
+            System.out.printf("Enter Author (%d) firstname: ", i + 1);
             String authorFirstname = scanner.nextLine();
-            System.out.println("Enter Author (%d) lastname: ");
+
+            System.out.printf("Enter Author (%d) lastname: ", i + 1);
             String authorLastname = scanner.nextLine();
+
             book.addAuthor(new Author(authorFirstname, authorLastname));
         }
+
         System.out.println("Added book: " + book.toString());
-        return book; 
+        return book;
     }
 
-    public void printListBooks(Book[] books) {
-        System.out.println("list books:");
-        for (int i = 0; i < books.length; i++) {
-            System.out.printf("%d. %s%n",
-                    i+1,
-                    books[i].getTitle());
+    public void printListBooks(List<Book> books) {
+        System.out.println("List of books:");
+        int index = 1;
+        for (Book book : books) {
+            System.out.printf("%d. %s%n", index++, book.getTitle());
         }
     }
 }

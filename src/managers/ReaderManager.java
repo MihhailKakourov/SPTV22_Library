@@ -6,6 +6,8 @@
 package managers;
 
 import entity.Reader;
+
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -33,13 +35,14 @@ public class ReaderManager {
         return reader; 
     }
     
-    public void printListReader(Reader[] readers) {
+    public void printListReader(List<Reader> readers) {
         System.out.println("List of readers:");
-        for (int i = 0; i < readers.length; i++) {
+        for (int i = 0; i < readers.size(); i++) {
             System.out.printf("%d. %s - %s%n",
                     i + 1,
-                    readers[i].getFirstname(),
-                    readers[i].getPhone());
+                    readers.get(i).getFirstname(),
+                    readers.get(i).getLastname());
+                    readers.get(i).getPhone();
         }
     }
 
