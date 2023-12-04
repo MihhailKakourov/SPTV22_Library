@@ -9,33 +9,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SaveManager {
-    public static List<Book> loadBooks() {;
-        List<Book> books = new ArrayList<>();
+    public static List<Book> loadBooks() {
+        List<Book> books;
         try (FileInputStream fis = new FileInputStream("C:\\Users\\golan\\Documents\\NetBeansProjects\\SPTV22\\SPTV22Library\\src\\managers\\books.txt");
              ObjectInputStream ois = new ObjectInputStream(fis)) {
             books = (List<Book>) ois.readObject();
-        } catch (FileNotFoundException e) {
-            System.out.println("File \"books.txt\" not found");
-        } catch (IOException e) {
-            System.out.println("I/O error while reading \"books.txt\"");
-        } catch (ClassNotFoundException e) {
-            System.out.println("Class \"Book\" not found");
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error while reading \"books.txt\": " + e.getMessage());
+            books = new ArrayList<>();
         }
         return books;
     }
 
-    public static List<Reader> loadReaders() {;
+    public static List<Reader> loadReaders() {
         List<Reader> readers = new ArrayList<>();
-        try {
-            FileInputStream fis = new FileInputStream("C:/Users/golan/Documents/NetBeansProjects/SPTV22/SPTV22Library/src/managers/readers.txt");
-            ObjectInputStream ois = new ObjectInputStream(fis);
+        try (FileInputStream fis = new FileInputStream("C:/Users/golan/Documents/NetBeansProjects/SPTV22/SPTV22Library/src/managers/readers.txt");
+             ObjectInputStream ois = new ObjectInputStream(fis)) {
             readers = (List<Reader>) ois.readObject();
-        } catch (FileNotFoundException e) {
-            System.out.println("File \"readers.txt\" not found");
-        } catch (IOException e) {
-            System.out.println("I/O error while reading \"readers.txt\"");
-        } catch (ClassNotFoundException e) {
-            System.out.println("Class \"Reader\" not found");
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error while loading readers: " + e.getMessage());
         }
         return readers;
     }

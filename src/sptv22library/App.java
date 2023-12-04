@@ -4,7 +4,6 @@ import entity.Book;
 import entity.Reader;
 import entity.History;
 import managers.ReaderManager;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import managers.BookManager;
@@ -46,8 +45,9 @@ public class App {
             System.out.println("5. Take out book");
             System.out.println("6. Print list reading books");
             System.out.println("7. Return book");
+            System.out.println("8. Book rating");
             System.out.println("Enter task number: ");
-            int task = InputProtection.intInput(0, 7);
+            int task = InputProtection.intInput(0, 8);
             switch (task) {
                 case 0:
                     repeat = false;
@@ -67,8 +67,11 @@ public class App {
                     readerManager.printListReader(readers);
                     break;
                 case 5:
-                    this.histories.add(historyManager.takeOutBook(books, readers));
-                    SaveManager.saveHistories(histories);
+                    History history = historyManager.takeOutBook(books, readers);
+                    if (history != null) {
+                        this.histories.add(history);
+                        SaveManager.saveHistories(histories);
+                    }
                     break;
                 case 6:
                     historyManager.printListReading(histories);
@@ -76,6 +79,9 @@ public class App {
                 case 7:
                     historyManager.returnBook(histories);
                     SaveManager.saveHistories(histories);
+                    break;
+                case 8:
+                    historyManager.bookRating(histories);
                     break;
                 default:
                     System.out.println("Select task from list");
